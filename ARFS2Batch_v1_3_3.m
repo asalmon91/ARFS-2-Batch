@@ -1,14 +1,11 @@
-   
-
-
-%% Applies the parameters in a .dmb to a user defined s+election of videos
+%% Applies the parameters in a .dmb to a user defined selection of videos
 restoredefaultpath; clear all; close all; clc; %#ok<*CLSCR>
-if ~isempty(strfind(version, '2014a')) % TODO, check for other versions than 2014a
+if contains(version, '2014a') % TODO, check for other versions than 2014a
     error('Please use Matlab 2014b or later');
 end    
      
 %% Get fx's
-addpath(fullfile(pwd,'fx'));
+addpath(genpath('fx'));
 
 %% Display Instructions (todo)
 
