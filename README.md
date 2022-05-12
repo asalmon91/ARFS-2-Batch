@@ -4,4 +4,4 @@ See help doc for instructions
 
 Requires >= Matlab 2016b
 
-Includes a Python 2.7 venv to handle .dmb writing
+Includes an .exe to handle .dmb writing (no longer requires Python 2.7 to be installed)
