@@ -43,19 +43,21 @@ elseif ~p.clusterwise || data.mtskip
     rfList  = sFrames(1:p.nReq);
 end
 
-python_venv_ffname = fullfile(pwd, 'fx', 'applyBatch', 'venv', 'Scripts', 'python.exe');
-py_script_ffname = fullfile(pwd, 'fx', 'applyBatch', 'applyBatch.py');
+python_exe_ffname = fullfile(pwd, 'fx', 'applyBatch.exe');
+py_script_ffname = fullfile(pwd, 'fx', 'applyBatch.py');
 for k=1:numel(rfList)
-    try
-		eval(sprintf('!"%s" "%s" -n "%s" -r %i -d "%s" -f %i', ...
-			python_venv_ffname, py_script_ffname, data.name, rfList(k), ...
-            fullfile(dmb.path, dmb.name), data.nFrames));
-    catch
-        python(py_script_ffname, ...
-            sprintf('-n "%s" -r %i -d "%s" -f %i', ...
-            data.name, rfList(k), ...
-            fullfile(dmb.path, dmb.name), data.nFrames));
-    end
+	% Attempt to use the python executable
+	[fail, stdout] = system(sprintf('"%s" -n "%s" -r %i -d "%s" -f %i', ...
+		python_exe_ffname, data.name, rfList(k), ...
+		fullfile(dmb.path, dmb.name), data.nFrames));
+	disp(stdout);
+	if fail
+		% Uses the default program to execute python files
+		python(py_script_ffname, ...
+			sprintf('-n "%s" -r %i -d "%s" -f %i', ...
+			data.name, rfList(k), ...
+			fullfile(dmb.path, dmb.name), data.nFrames));
+	end
 end
 
 
